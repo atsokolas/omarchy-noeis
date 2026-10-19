@@ -1,0 +1,196 @@
+/* The save card. House paper and ink: until the reader's own theme arrives
+   from noeis.io (presence.js), the house light palette, or dark when the
+   system is dark. The reader's palette is laid over these inline. */
+:root {
+  color-scheme: light dark;
+  --noeis-canvas: #f7f4ed;
+  --noeis-paper: #fffdf8;
+  --noeis-paper-muted: #f4eee2;
+  --noeis-ink: #332f29;
+  --noeis-ink-muted: #5f625f;
+  --noeis-ink-subtle: #7a756c;
+  --noeis-rule: rgba(91, 80, 63, 0.16);
+  --noeis-rule-strong: rgba(91, 80, 63, 0.28);
+  --noeis-thread: #b1862e;
+  --noeis-thread-strong: #8b5f1d;
+  --noeis-action: var(--noeis-thread-strong);
+  --noeis-action-soft: color-mix(in srgb, var(--noeis-thread) 18%, transparent);
+  --noeis-focus: color-mix(in srgb, var(--noeis-action) 38%, transparent);
+  --noeis-danger: #9b5a46;
+  --noeis-living-seed: color-mix(in srgb, #6f7340 62%, var(--noeis-paper));
+  --noeis-living-sap: color-mix(in srgb, #6f7340 82%, var(--noeis-ink));
+  --noeis-mix-lift: #ffffff;
+  --noeis-font-ui: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  --noeis-font-reading: "Newsreader", "Iowan Old Style", Georgia, serif;
+  --noeis-font-mono: "SFMono-Regular", Menlo, Consolas, monospace;
+
+  /* The names the shared switch stylesheet reads. */
+  --font-mono: var(--noeis-font-mono);
+  --text-primary: var(--noeis-ink);
+  --text-muted: var(--noeis-ink-subtle);
+  --border-subtle: var(--noeis-rule);
+  --paper: var(--noeis-paper);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --noeis-canvas: #16140f;
+    --noeis-paper: #211e17;
+    --noeis-paper-muted: #1c1813;
+    --noeis-ink: #f1eadc;
+    --noeis-ink-muted: #c5bda9;
+    --noeis-ink-subtle: #948b7d;
+    --noeis-rule: rgba(223, 206, 166, 0.16);
+    --noeis-rule-strong: rgba(223, 206, 166, 0.28);
+    --noeis-thread: #d6ad63;
+    --noeis-thread-strong: #e0b971;
+    --noeis-danger: #c78978;
+    --noeis-mix-lift: #332812;
+  }
+}
+
+* { box-sizing: border-box; }
+
+body {
+  width: 360px;
+  margin: 0;
+  padding: 16px 20px 14px;
+  background: var(--noeis-paper);
+  color: var(--noeis-ink);
+  font: 14px/1.5 var(--noeis-font-ui);
+}
+
+/* Exactly one part of the card shows at a time; popup.js names it. */
+[hidden] { display: none !important; }
+[data-for] { display: none; }
+body[data-view="signin"] [data-for="signin"],
+body[data-view="closed"] [data-for="closed"],
+body[data-view="page"] [data-for="page"] { display: block; }
+body[data-view="page"] footer[data-for="page"] { display: flex; }
+
+.masthead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  padding-bottom: 10px;
+  margin-bottom: 14px;
+  border-bottom: 1px solid var(--noeis-rule);
+}
+
+.wordmark {
+  font-family: var(--noeis-font-reading);
+  font-size: 20px;
+  font-style: italic;
+  letter-spacing: -0.01em;
+}
+
+.site {
+  margin: 0 0 2px;
+  color: var(--noeis-ink-subtle);
+  font-size: 11px;
+  font-variant-caps: all-small-caps;
+  letter-spacing: 0.12em;
+}
+
+.title {
+  margin: 0 0 6px;
+  font-family: var(--noeis-font-reading);
+  font-size: 19px;
+  font-weight: 500;
+  line-height: 1.25;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.meta { margin: 0 0 14px; color: var(--noeis-ink-muted); }
+
+.save { margin-top: 14px; }
+
+.row {
+  display: grid;
+  grid-template-columns: 64px 1fr;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.label {
+  color: var(--noeis-ink-subtle);
+  font-size: 11px;
+  font-variant-caps: all-small-caps;
+  letter-spacing: 0.12em;
+}
+
+select,
+input {
+  width: 100%;
+  height: 32px;
+  padding: 0 8px;
+  border: 1px solid var(--noeis-rule-strong);
+  border-radius: 6px;
+  background: var(--noeis-paper);
+  color: var(--noeis-ink);
+  font: inherit;
+}
+
+.habit {
+  margin: -4px 0 10px 74px;
+  color: var(--noeis-ink-subtle);
+  font-size: 12px;
+}
+
+.primary {
+  width: 100%;
+  height: 38px;
+  margin-top: 4px;
+  border: 0;
+  border-radius: 6px;
+  background: var(--noeis-ink);
+  color: var(--noeis-paper);
+  font: 600 14px/1 var(--noeis-font-ui);
+  cursor: pointer;
+  transition: opacity 140ms ease;
+}
+
+.primary:hover { opacity: 0.88; }
+.primary:disabled { opacity: 0.5; cursor: default; }
+
+.quiet {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--noeis-ink-muted);
+  font: inherit;
+  font-size: 12px;
+  text-decoration: underline;
+  text-decoration-color: var(--noeis-rule-strong);
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+
+.quiet:hover { color: var(--noeis-ink); }
+
+a { color: var(--noeis-action); }
+
+:focus-visible { outline: 2px solid var(--noeis-focus); outline-offset: 2px; }
+
+.receipt { margin: 12px 0 0; min-height: 1.5em; color: var(--noeis-ink-muted); }
+.receipt:empty { display: none; }
+.receipt.is-error { color: var(--noeis-danger); }
+.receipt strong { color: var(--noeis-ink); font-weight: 600; }
+
+.footer {
+  justify-content: space-between;
+  align-items: baseline;
+  margin-top: 16px;
+  padding-top: 10px;
+  border-top: 1px solid var(--noeis-rule);
+  color: var(--noeis-ink-subtle);
+  font-size: 12px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .primary { transition: none; }
+}

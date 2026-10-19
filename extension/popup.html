@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Noeis</title>
+  <link rel="stylesheet" href="popup.css">
+  <link rel="stylesheet" href="note-taker-ui/src/styles/placement-switch.css">
+</head>
+<body data-view="">
+  <header class="masthead">
+    <span class="wordmark">Noeis</span>
+    <a class="quiet" id="libraryLink" href="https://www.noeis.io/library" target="_blank" rel="noreferrer">Library</a>
+  </header>
+
+  <section data-for="signin">
+    <h1 class="title">Save what you read, with the passages you mark.</h1>
+    <p class="meta">Sign in on noeis.io and this button signs in with you.</p>
+    <button type="button" class="primary" id="signIn">Sign in on noeis.io</button>
+  </section>
+
+  <section data-for="closed">
+    <p class="site" id="closedSite"></p>
+    <h1 class="title">Chrome keeps this page closed to extensions.</h1>
+    <p class="meta">Open an article in a tab of its own and press the button there.</p>
+  </section>
+
+  <section data-for="page">
+    <p class="site" id="site"></p>
+    <h1 class="title" id="pageTitle"></h1>
+
+    <form id="saveForm" class="save">
+      <label class="row">
+        <span class="label">Folder</span>
+        <select id="folder"><option value="">Uncategorized</option><option value="new">New folder…</option></select>
+      </label>
+      <label class="row" id="newFolderRow" hidden>
+        <span class="label">Name</span>
+        <input id="newFolder" autocomplete="off" placeholder="Name the folder and press Return">
+      </label>
+      <p class="habit" id="habit" hidden></p>
+      <div class="row">
+        <span class="label">Put in</span>
+        <div id="placement"></div>
+      </div>
+      <button type="submit" class="primary" id="save">Save to Library</button>
+    </form>
+
+    <p class="receipt" id="receipt" role="status" aria-live="polite"></p>
+  </section>
+
+  <footer class="footer" data-for="page">
+    <span id="who"></span>
+    <button type="button" class="quiet" id="signOut">Sign out</button>
+  </footer>
+
+  <script type="module" src="popup.js"></script>
+</body>
+</html>
